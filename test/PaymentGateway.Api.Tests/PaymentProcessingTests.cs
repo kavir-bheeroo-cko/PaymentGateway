@@ -24,7 +24,7 @@ public class PaymentProcessingTests
         Assert.NotEqual(Guid.Empty, result.PaymentId);
         Assert.Equal("222240", result.CardDetails.FirstSixDigits);
         Assert.Equal("8877", result.CardDetails.LastFourDigits);
-    }    
+    }
 }
 
 public class StubAcquirerClient : IAcquirerClient
