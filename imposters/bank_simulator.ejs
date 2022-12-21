@@ -1,0 +1,64 @@
+{
+    "imposters": [
+        {
+            "port": 8080,
+            "protocol": "http",
+            "name": "Bank simulator",
+            "defaultResponse": {
+                "statusCode": 404,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Connection": "keep-alive"
+                }
+            },
+            "stubs": [
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "body" : {
+                                    "card_number": "2222405343248877"
+                                },
+                                "method": "POST",
+                                "path": "/payments"
+                            }
+                        }
+                    ],
+                    "responses": [
+                        {
+                            "is": {
+                                "body": {
+                                    "authorized": true,
+                                    "authorization_code": "0bb07405-6d44-4b50-a14f-7ae0beff13ad"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "predicates": [
+                        {
+                            "equals": {
+                                "body" : {
+                                    "card_number": "22224053432481122"
+                                },
+                                "method": "POST",
+                                "path": "/payments"
+                            }
+                        }
+                    ],
+                    "responses": [
+                        {
+                            "is": {
+                                "body": {
+                                    "authorized": false,
+                                    "authorization_code": ""
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
