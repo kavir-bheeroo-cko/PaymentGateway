@@ -2,6 +2,9 @@
 This template is provided to help bootstrap your solution structure so you can focus on
 the implementation details of your code test submission.
 
+## Requirements
+Please ensure you familiarise yourself with the [requirements](./docs/requirements.md) to understand the goals of the test.
+
 ## Template structure
 ```
 src/
