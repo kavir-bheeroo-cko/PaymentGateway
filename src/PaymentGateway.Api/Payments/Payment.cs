@@ -12,19 +12,25 @@ public class Payment
 
     public string Status { get; }
 
-    public string AuthorizationCode { get; }
+    public string? AuthorizationCode { get; }
 
     public string AcquirerName { get; }
 
-    public Payment(Guid id, Card card, uint amount, string currency, string status, string authorizationCode, string acquirerName)
+    public Payment(string cardNumber, int expiryMonth, int expiryYear, uint amount, string currency, bool? authorized, string? authorizationCode, string acquirerName)
     {
-        Id = id;
-        Card = card;
+        Id = Guid.NewGuid();
+        Card = new Card(cardNumber, expiryMonth, expiryYear);
         Amount = amount;
         Currency = currency;
-        Status = status;
         AuthorizationCode = authorizationCode;
         AcquirerName = acquirerName;
+
+        Status = authorized switch
+        {
+            true => PaymentStatus.Authorized,
+            false => PaymentStatus.Declined,
+            null => PaymentStatus.Declined
+        };
     }
 }
 
