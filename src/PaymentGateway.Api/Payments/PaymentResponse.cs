@@ -6,13 +6,13 @@ public class PaymentResponse
 
     public string Status { get; }
 
-    private PaymentResponse(string status)
+    private PaymentResponse(Guid id, string status)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Status = status;
     }
 
-    public PaymentResponse BuildAuthorizedResponse() => new (PaymentStatus.Authorized);
+    public static PaymentResponse BuildAuthorizedResponse(Guid id) => new PaymentResponse(id, PaymentStatus.Authorized);
 
-    public PaymentResponse BuildDeclinedResponse() => new(PaymentStatus.Declined);
+    public static PaymentResponse BuildDeclinedResponse(Guid id) => new PaymentResponse(id, PaymentStatus.Declined);
 }
