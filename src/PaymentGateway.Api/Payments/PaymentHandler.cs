@@ -33,7 +33,7 @@ public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResp
         await _paymentRepository.Save(payment);
 
         // dispatch event
-        await _mediator.Publish(payment, cancellationToken);
+        await _mediator.Publish(new PaymentEvent(payment), cancellationToken);
 
         // build response
         var paymentResponse = BuildPaymentResponse(payment);
@@ -41,7 +41,7 @@ public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResp
         return paymentResponse;
     }
 
-    private AcquirerRequest BuildAcquirerRequest(PaymentRequest paymentRequest) =>
+    private static AcquirerRequest BuildAcquirerRequest(PaymentRequest paymentRequest) =>
         new(
             paymentRequest.CardNumber,
             paymentRequest.ExpiryMonth,
@@ -50,7 +50,7 @@ public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResp
             paymentRequest.Currency,
             paymentRequest.Cvv);
 
-    private Payment CreatePayment(PaymentRequest paymentRequest, AcquirerResponse? acquirerResponse) =>
+    private static Payment CreatePayment(PaymentRequest paymentRequest, AcquirerResponse? acquirerResponse) =>
         new(
             paymentRequest.CardNumber,
             paymentRequest.ExpiryMonth,
@@ -61,13 +61,8 @@ public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResp
             acquirerResponse?.AuthorizationCode,
             "");
 
-    private PaymentResponse BuildPaymentResponse(Payment payment)
-    {
-        if (payment.Status == PaymentStatus.Authorized)
-        {
-            return PaymentResponse.BuildAuthorizedResponse(payment.Id);
-        }
-
-        return PaymentResponse.BuildDeclinedResponse(payment.Id);
-    }
+    private static PaymentResponse BuildPaymentResponse(Payment payment) =>
+        payment.Status == PaymentStatus.Authorized
+            ? PaymentResponse.BuildAuthorizedResponse(payment.Id)
+            : PaymentResponse.BuildDeclinedResponse(payment.Id);
 }
