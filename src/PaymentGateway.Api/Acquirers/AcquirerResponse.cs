@@ -2,7 +2,7 @@
 
 namespace PaymentGateway.Api.Acquirers;
 
-public class AcquirerResponse
+public record AcquirerResponse
 {
     [JsonPropertyName("authorized")]
     public bool Authorized { get; }

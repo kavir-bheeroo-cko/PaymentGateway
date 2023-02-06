@@ -1,34 +1,33 @@
 ﻿using MediatR;
 using OneOf;
 
-namespace PaymentGateway.Api.Payments.Queries
+namespace PaymentGateway.Api.Payments.Queries;
+
+public class PaymentQueryHandler : IRequestHandler<PaymentQueryRequest, OneOf<PaymentQueryResponse?, Exception>>
 {
-    public class PaymentQueryHandler : IRequestHandler<PaymentQueryRequest, OneOf<PaymentQueryResponse?, Exception>>
+    private readonly IPaymentEventRepository _paymentEventRepository;
+
+    public PaymentQueryHandler(IPaymentEventRepository paymentEventRepository)
     {
-        private readonly IPaymentEventRepository _paymentEventRepository;
+        _paymentEventRepository = paymentEventRepository ?? throw new ArgumentNullException(nameof(paymentEventRepository));
+    }
 
-        public PaymentQueryHandler(IPaymentEventRepository paymentEventRepository)
+    public async Task<OneOf<PaymentQueryResponse?, Exception>> Handle(PaymentQueryRequest request, CancellationToken cancellationToken)
+    {
+        var paymentEvent = await _paymentEventRepository.GetByIdAsync(request.Id);
+
+        if (paymentEvent is null)
         {
-            _paymentEventRepository = paymentEventRepository ?? throw new ArgumentNullException(nameof(paymentEventRepository));
+            return null as PaymentQueryResponse;
         }
 
-        public async Task<OneOf<PaymentQueryResponse?, Exception>> Handle(PaymentQueryRequest request, CancellationToken cancellationToken)
-        {
-            var paymentEvent = await _paymentEventRepository.GetByIdAsync(request.Id);
-
-            if (paymentEvent is null)
-            {
-                return null as PaymentQueryResponse;
-            }
-
-            return new PaymentQueryResponse(
-                paymentEvent.Id,
-                paymentEvent.CardNumberLast4,
-                paymentEvent.ExpiryMonth,
-                paymentEvent.ExpiryYear,
-                paymentEvent.Amount,
-                paymentEvent.Currency,
-                paymentEvent.Status);
-        }
+        return new PaymentQueryResponse(
+            paymentEvent.Id,
+            paymentEvent.CardNumberLast4,
+            paymentEvent.ExpiryMonth,
+            paymentEvent.ExpiryYear,
+            paymentEvent.Amount,
+            paymentEvent.Currency,
+            paymentEvent.Status);
     }
 }

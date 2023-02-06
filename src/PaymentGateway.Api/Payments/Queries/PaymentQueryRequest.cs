@@ -3,7 +3,7 @@ using OneOf;
 
 namespace PaymentGateway.Api.Payments.Queries;
 
-public class PaymentQueryRequest : IRequest<OneOf<PaymentQueryResponse?, Exception>>
+public record PaymentQueryRequest : IRequest<OneOf<PaymentQueryResponse?, Exception>>
 {
     public Guid Id { get; }
 

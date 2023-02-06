@@ -2,7 +2,7 @@
 
 namespace PaymentGateway.Api.Acquirers;
 
-public class AcquirerRequest
+public record AcquirerRequest
 {
     [JsonPropertyName("card_number")]
     public string CardNumber { get; }
