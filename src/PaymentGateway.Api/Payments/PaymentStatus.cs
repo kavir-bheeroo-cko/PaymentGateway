@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Api;
+﻿namespace PaymentGateway.Api.Payments;
 
 public static class PaymentStatus
 {

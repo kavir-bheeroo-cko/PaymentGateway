@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using PaymentGateway.Api.Payments.Commands;
 
-namespace PaymentGateway.Api.Payments;
+namespace PaymentGateway.Api.Payments.Commands;
 
 public class PaymentRequestValidator : AbstractValidator<PaymentRequest>
 {
@@ -36,6 +35,6 @@ public class PaymentRequestValidator : AbstractValidator<PaymentRequest>
         RuleFor(x => x.Cvv)
             .NotEmpty().WithMessage("cvv_missing")
             .NotNull().WithMessage("cvv_missing")
-            .Must(x => (x.Length >= 3 || x.Length <= 4) && int.TryParse(x, out _)).WithMessage("cvv_invalid");
+            .Must(x => x.Length >= 3 && x.Length <= 4 && int.TryParse(x, out _)).WithMessage("cvv_invalid");
     }
 }
