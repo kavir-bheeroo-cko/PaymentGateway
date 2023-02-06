@@ -1,16 +1,20 @@
 using System.Reflection;
+
 using FluentValidation;
 using FluentValidation.Results;
+
 using MediatR;
+
 using OneOf;
+
 using PaymentGateway.Api.Acquirers;
 using PaymentGateway.Api.Acquirers.BankSimulator;
 using PaymentGateway.Api.Bank;
-using PaymentGateway.Api.Payments;
 using PaymentGateway.Api.Payments.Commands;
 using PaymentGateway.Api.Payments.Commands.InMemoryRepository;
 using PaymentGateway.Api.Payments.Queries;
 using PaymentGateway.Api.Payments.Queries.InMemoryRepository;
+
 using Serilog;
 
 try
