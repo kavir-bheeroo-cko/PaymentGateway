@@ -1,6 +1,6 @@
 ﻿namespace PaymentGateway.Api.Payments.Commands;
 
-public class PaymentResponse
+public record PaymentResponse
 {
     public Guid Id { get; }
 
