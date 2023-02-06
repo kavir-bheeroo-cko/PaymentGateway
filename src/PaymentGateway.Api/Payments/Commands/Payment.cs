@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Api.Payments;
+﻿namespace PaymentGateway.Api.Payments.Commands;
 
 public class Payment
 {
@@ -36,6 +36,7 @@ public class Payment
 
 public class Card
 {
+    // todo: mask
     public string Number { get; }
 
     public int ExpiryMonth { get; }

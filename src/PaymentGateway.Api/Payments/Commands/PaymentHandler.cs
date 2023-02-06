@@ -3,9 +3,9 @@ using OneOf;
 using PaymentGateway.Api.Acquirers;
 using PaymentGateway.Api.Bank;
 
-namespace PaymentGateway.Api.Payments;
+namespace PaymentGateway.Api.Payments.Commands;
 
-public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResponse, Exception>>
+public class PaymentHandler : IRequestHandler<PaymentRequest, OneOf<PaymentResponse, Exception>>
 {
     private readonly IAcquirer _acquirer;
     private readonly IPaymentRepository _paymentRepository;
@@ -30,10 +30,10 @@ public class PaymentHandler : IRequestHandler<PaymentRequest,  OneOf<PaymentResp
         var payment = CreatePayment(paymentRequest, acquirerResponse);
 
         // store in DB
-        await _paymentRepository.Save(payment);
+        await _paymentRepository.SaveAsync(payment);
 
         // dispatch event
-        await _mediator.Publish(new PaymentEvent(payment), cancellationToken);
+        await _mediator.Publish(payment.ToEvent(), cancellationToken);
 
         // build response
         var paymentResponse = BuildPaymentResponse(payment);

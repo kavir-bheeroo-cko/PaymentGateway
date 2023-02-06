@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+
 using MediatR;
+
 using OneOf;
 
-namespace PaymentGateway.Api.Payments;
+namespace PaymentGateway.Api.Payments.Commands;
 
 public record PaymentRequest : IRequest<OneOf<PaymentResponse, Exception>>
 {
