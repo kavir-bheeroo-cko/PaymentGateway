@@ -39,10 +39,6 @@ try
         app.UseSwaggerUI();
     }
 
-    //app.UseHttpsRedirection();
-
-    //app.UseAuthorization();
-
     app.UseRouting();
 
     app.MapPost("/payments", async (PaymentRequest request, IMediator mediator, CancellationToken cancellationToken) =>

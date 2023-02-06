@@ -2,8 +2,9 @@
 - Simulator always returns bad request
 
 # To-do
+- Authentication/Authorization
 - Logging
-- Masking
+- Masking [done]
 - Automated / unit tests
 - Health endpoint
 - Fluent Validation [done]

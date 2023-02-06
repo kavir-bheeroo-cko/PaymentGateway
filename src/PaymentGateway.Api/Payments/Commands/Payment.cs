@@ -36,7 +36,6 @@ public class Payment
 
 public class Card
 {
-    // todo: mask
     public string Number { get; }
 
     public int ExpiryMonth { get; }
@@ -45,7 +44,7 @@ public class Card
 
     public Card(string number, int expiryMonth, int expiryYear)
     {
-        Number = number;
+        Number = $"{number[..6]}****{number[^4..]}";
         ExpiryMonth = expiryMonth;
         ExpiryYear = expiryYear;
     }
