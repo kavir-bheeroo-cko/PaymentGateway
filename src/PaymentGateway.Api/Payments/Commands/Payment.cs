@@ -1,4 +1,4 @@
-﻿namespace PaymentGateway.Api.Payments;
+﻿namespace PaymentGateway.Api.Payments.Commands;
 
 public class Payment
 {
@@ -44,7 +44,7 @@ public class Card
 
     public Card(string number, int expiryMonth, int expiryYear)
     {
-        Number = number;
+        Number = $"{number[..6]}****{number[^4..]}";
         ExpiryMonth = expiryMonth;
         ExpiryYear = expiryYear;
     }
