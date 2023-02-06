@@ -2,10 +2,7 @@
 
 public class AcquirerOptions
 {
-    public string Uri { get; }
+    public const string SectionName = "Acquirer";
 
-    public AcquirerOptions(string uri)
-    {
-        Uri = uri ?? throw new ArgumentNullException(nameof(uri));
-    }
+    public string? Uri { get; init; }
 }

@@ -19,7 +19,7 @@ public class AcquirerRequest
     [JsonPropertyName("cvv")]
     public string Cvv { get; }
 
-    public SimulatorAcquirerRequest(string cardNumber, int expiryMonth, int expiryYear, uint amount, string currency, string cvv)
+    public AcquirerRequest(string cardNumber, int expiryMonth, int expiryYear, uint amount, string currency, string cvv)
     {
         string expiryMonthInString = expiryMonth.ToString().PadLeft(2, '0');
 
