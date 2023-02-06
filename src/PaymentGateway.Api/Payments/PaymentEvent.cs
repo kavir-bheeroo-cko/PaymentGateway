@@ -18,7 +18,14 @@ namespace PaymentGateway.Api.Payments
 
         public string Status { get; }
 
-        public PaymentEvent(Guid id, string? cardNumberLast4, int expiryMonth, int expiryYear, uint amount, string currency, string status)
+        public PaymentEvent(
+            Guid id,
+            string? cardNumberLast4,
+            int expiryMonth,
+            int expiryYear,
+            uint amount,
+            string currency,
+            string status)
         {
             Id = id;
             CardNumberLast4 = cardNumberLast4;
