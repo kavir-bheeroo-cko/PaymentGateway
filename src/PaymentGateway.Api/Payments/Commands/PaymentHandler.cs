@@ -48,8 +48,6 @@ public class PaymentHandler : IRequestHandler<PaymentRequest, OneOf<PaymentRespo
         // build response
         var paymentResponse = BuildPaymentResponse(payment);
 
-        // handle decline flow
-
         return paymentResponse;
     }
 

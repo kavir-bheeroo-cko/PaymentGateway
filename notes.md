@@ -8,3 +8,4 @@
 - Automated / unit tests
 - Health endpoint
 - Fluent Validation [done]
+- Resiliency
