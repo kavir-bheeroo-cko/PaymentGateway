@@ -1,9 +1,12 @@
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.Results;
 using MediatR;
 using OneOf;
 using PaymentGateway.Api.Acquirers;
 using PaymentGateway.Api.Acquirers.BankSimulator;
 using PaymentGateway.Api.Bank;
+using PaymentGateway.Api.Payments;
 using PaymentGateway.Api.Payments.Commands;
 using PaymentGateway.Api.Payments.Commands.InMemoryRepository;
 using PaymentGateway.Api.Payments.Queries;
@@ -18,6 +21,7 @@ try
     builder.Services.AddMediatR(typeof(Payment).GetTypeInfo().Assembly);
     builder.Services.AddOptions<AcquirerOptions>().Bind(builder.Configuration.GetSection(AcquirerOptions.SectionName));
     builder.Services.AddHttpClient();
+    builder.Services.AddValidatorsFromAssemblyContaining<PaymentRequestValidator>();
     builder.Services.AddSingleton<IPaymentRepository, InMemoryPaymentRepository>();
     builder.Services.AddSingleton<IAcquirer, BankSimulatorAcquirer>();
     builder.Services.AddSingleton<IPaymentEventRepository, InMemoryPaymentEventRepository>();
@@ -56,11 +60,11 @@ try
 
     app.Run();
 
-    static IResult MatchResult(OneOf<PaymentResponse, Exception> result)
+    static IResult MatchResult(OneOf<PaymentResponse, ValidationResult, Exception> result)
     {
         return result.Match(
             created => Results.Json(statusCode: 201, data: created),
-            // add validation errors
+            validationError => Results.Json(statusCode: 400, data: validationError.Errors.Select(x => x.ErrorMessage )),
             genericError => Results.Json(statusCode: 500, data: genericError));
     }
 

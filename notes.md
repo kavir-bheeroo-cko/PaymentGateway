@@ -5,3 +5,5 @@
 - Logging
 - Masking
 - Automated / unit tests
+- Health endpoint
+- Fluent Validation [done]
